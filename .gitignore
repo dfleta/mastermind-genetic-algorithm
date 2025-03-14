@@ -1,0 +1,31 @@
+# VSCode
+.vscode
+.cache
+*.code-workspace
+
+# Python virtual environments
+venv*/
+__pycache__
+.venv
+
+# Pytest
+.pytest_cache
+
+# Tox
+.tox/
+
+# Wheel
+build/
+
+# Coverage
+.coverage
+coverage_annotation/
+
+# uv
+.python-version
+
+# ruff
+.ruff_cache
+
+# MacOS
+.DS_Store

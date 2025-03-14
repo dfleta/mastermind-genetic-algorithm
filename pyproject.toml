@@ -1,0 +1,14 @@
+[project]
+name = "mastermind-genetic-algorithm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib>=3.10.1",
+]
+
+[dependency-groups]
+lint = [
+    "ruff>=0.10.0",
+]
