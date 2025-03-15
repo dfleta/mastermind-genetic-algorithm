@@ -3,33 +3,6 @@ from src.mastermind import Mastermind, Colors
 from src.genetic_algorithm import Genetic
 
 
-def guess_solution():
-    solution = [Colors.RED, Colors.BLUE, Colors.PURPLE, Colors.YELLOW]
-    game = Mastermind(solution)
-    print(game.get_solution())
-
-    pegs = (Colors.RED, Colors.BLUE, Colors.PURPLE, Colors.YELLOW)
-    print(game.guess_solution(pegs))
-
-    pegs = (Colors.BLACK, Colors.BLUE, Colors.PURPLE, Colors.YELLOW)
-    print(game.guess_solution(pegs))
-
-    solution = [Colors.RED, Colors.BLUE, Colors.PURPLE, Colors.RED]
-    game = Mastermind(solution)
-    pegs = (Colors.BLACK, Colors.BLUE, Colors.PURPLE, Colors.BLACK)
-    print(game.guess_solution(pegs))
-
-    solution = [Colors.RED, Colors.BLUE, Colors.PURPLE, Colors.YELLOW]
-    game = Mastermind(solution)
-    pegs = (Colors.BLUE, Colors.RED, Colors.YELLOW, Colors.PURPLE)
-    print(game.guess_solution(pegs))
-
-    solution = [Colors.RED, Colors.BLUE, Colors.YELLOW, Colors.BLUE]
-    game = Mastermind(solution)
-    pegs = (Colors.BLUE, Colors.RED, Colors.YELLOW, Colors.PURPLE)
-    print(game.guess_solution(pegs))
-
-
 def main():
     print("\n### GA ###\n")
 

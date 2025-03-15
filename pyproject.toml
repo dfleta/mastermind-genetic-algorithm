@@ -12,3 +12,8 @@ dependencies = [
 lint = [
     "ruff>=0.10.0",
 ]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "pytest-sugar>=1.0.0",
+]
