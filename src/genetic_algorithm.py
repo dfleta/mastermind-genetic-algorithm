@@ -85,6 +85,7 @@ class Genetic:
 
     def populate_nex_generation(self):
         self.population = self.elitism_selection()
+        self.population_fitness = list(map(self.evaluate_individual, self.population))
 
     def elitism_selection(self):
         # [((Chromosoma), fitness)]
@@ -105,11 +106,13 @@ class Genetic:
         return self.global_maximum()
 
     def global_maximum(self):
-        global_maximum = set(filter(
-            lambda chromosome: self.evaluate_individual(chromosome)
-            == Genetic.F_MAX_GLOBAL,
-            self.population,
-        ))
+        global_maximum = set(
+            filter(
+                lambda chromosome: self.evaluate_individual(chromosome)
+                == Genetic.F_MAX_GLOBAL,
+                self.population,
+            )
+        )
         if global_maximum:
             self.solution = global_maximum.pop()
             return self.solution
