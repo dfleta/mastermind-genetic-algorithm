@@ -84,7 +84,8 @@ class Genetic:
         print("muted:", tuple(muted))
 
     def populate_nex_generation(self):
-        self.population = self.elitism_selection()
+        # self.population = self.elitism_selection()
+        self.population = self.rank_selection()
         self.population_fitness = list(map(self.evaluate_individual, self.population))
 
     def elitism_selection(self):
@@ -101,6 +102,18 @@ class Genetic:
                 : Genetic.POPULATION_SIZE
             ]
         )
+
+    def rank_selection(self):
+        chromosomes = list(self.population)
+        population_fitness = list(map(self.evaluate_individual, chromosomes))
+        population_fitness = list(map(lambda fitness: fitness + 4, population_fitness))
+        selected_individuals = set()
+        while len(selected_individuals) < Genetic.POPULATION_SIZE:
+            selected_individuals.add(
+                random.choices(chromosomes, weights=population_fitness, k=1)[0]
+            )
+        assert len(selected_individuals) == Genetic.POPULATION_SIZE
+        return selected_individuals
 
     def stopping(self):
         return self.global_maximum()

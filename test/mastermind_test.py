@@ -19,7 +19,6 @@ def test_solution_list_to_tuple_init(game):
 
 
 def test_guess_solution(game):
-
     pegs = (Colors.RED, Colors.BLUE, Colors.PURPLE, Colors.YELLOW)
     assert game.guess_solution(pegs) == [1, 1, 1, 1]
 
