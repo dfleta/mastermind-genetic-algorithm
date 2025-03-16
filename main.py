@@ -42,7 +42,8 @@ def main():
     ]
     generation = 0
 
-    while not ga.stopping():
+    attemps = 0
+    while not ga.stopping() and attemps < Mastermind.MAX_ATTEMPS:
         ga.evaluate_population()
         print("\n### POPULATION FITNESS ###\n")
         print(ga.population_fitness)
@@ -70,6 +71,8 @@ def main():
         print("\n###  POPULATION SELECTED ###\n")
         print(ga.population)
         print("len population sorted: ", len(ga.population))
+
+        attemps += 1
 
         # Obtener color para esta generación
         color = colors[generation % len(colors)]

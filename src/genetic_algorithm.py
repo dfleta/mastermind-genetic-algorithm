@@ -29,9 +29,7 @@ class Genetic:
         return sum(self.fitness_function.guess_solution(chromosome))
 
     def evaluate_population(self):
-        self.population_fitness = [
-            self.evaluate_individual(individual) for individual in self.population
-        ]
+        self.population_fitness = list(map(self.evaluate_individual, self.population))
 
     def select_parents(self):
         # los cromosomas en el set son unicos

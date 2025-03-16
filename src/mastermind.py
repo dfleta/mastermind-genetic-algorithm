@@ -13,6 +13,9 @@ class Colors(Enum):
 
 
 class Mastermind:
+
+    MAX_ATTEMPS = 12
+
     def __init__(self, pegs):
         self.solution = tuple(pegs)
 
