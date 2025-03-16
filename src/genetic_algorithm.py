@@ -70,18 +70,20 @@ class Genetic:
         return child_a, child_b
 
     def mutation(self):
-        if len(self.parents) > 0:
-            chromosome = self.parents.pop()
-        else:
-            chromosome = random.choice(tuple(self.population))
-            self.population.remove(chromosome)
+        MUTATION_RATIO = Genetic.POPULATION_SIZE // 10
+        for _ in range(MUTATION_RATIO):
+            if len(self.parents) > 0:
+                chromosome = self.parents.pop()
+            else:
+                chromosome = random.choice(tuple(self.population))
+                self.population.remove(chromosome)
 
-        print(chromosome)
-        gen_mutation = random.randrange(0, len(chromosome))
-        muted = list(chromosome)
-        muted[gen_mutation] = random.choice(list(Colors.__members__.keys()))
-        self.population.add(tuple(muted))
-        print("muted:", tuple(muted))
+            print(chromosome)
+            gen_muted = random.randrange(0, len(chromosome))
+            muted = list(chromosome)
+            muted[gen_muted] = random.choice(list(Colors.__members__.keys()))
+            self.population.add(tuple(muted))
+            print("muted:", tuple(muted))
 
     def populate_nex_generation(self):
         # self.population = self.elitism_selection()
