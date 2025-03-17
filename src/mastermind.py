@@ -45,12 +45,10 @@ class Mastermind:
         return code
 
 
-def print_colored_solution(pegs):
-    print("Solution: ", end="")
+def print_colored_pegs(pegs):
     for peg in pegs:
         if isinstance(peg, str):  # Si es un string (nombre del color)
             color = Colors[peg]
             print(color.value[1], end=" ")
         else:  # Si es un objeto Colors
             print(peg.value[1], end=" ")
-    print()  # Nueva línea al final

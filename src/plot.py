@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 # Crear una única figura fuera del bucle que se reutilizará
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(15, 6))
 
 # Lista de colores para cada generación
 COLORS = [
