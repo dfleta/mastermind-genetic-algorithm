@@ -19,47 +19,10 @@ def main():
 
     ga = Genetic()
     ga.set_fitness_function(game)
-
-    ga.create_initial_population()
-    print("\n### INITIAL POPULATION ###\n")
-    print(ga.population)
-
+    ga.set_max_generations(Mastermind.MAX_ATTEMPS)
     draw_generation = plot.plot_generation(generation=0)
-
-    attemps = 0
-    while not ga.stopping() and attemps < Mastermind.MAX_ATTEMPS:
-        ga.evaluate_population()
-        print("\n### POPULATION FITNESS ###\n")
-        print(ga.population_fitness)
-
-        print("\n### PARENTS ###\n")
-        parents_fitness = ga.select_parents()
-        print("len parents: ", len(ga.parents))
-        print(ga.parents)
-        print("\n### PARENTS FITNESS ###\n")
-        print(parents_fitness)
-
-        ga.reproduce_offspring()
-        print("\n###  OFFSPRING ###\n")
-        print(ga.population)
-        print("len population: ", len(ga.population))
-        print("len parents: ", len(ga.parents))
-
-        print("\n###  MUTATION  ###\n")
-        ga.mutation()
-        print("len population: ", len(ga.population))
-        print("len parents: ", len(ga.parents))
-
-        print("\n###  POPULATION SORTED ###\n")
-        ga.populate_nex_generation()
-        print("\n###  POPULATION SELECTED ###\n")
-        print(ga.population)
-        print("len population sorted: ", len(ga.population))
-
-        attemps += 1
-
-        draw_generation(len(ga.population), ga.population_fitness)
-
+    ga.set_plot(draw_generation)
+    ga.run()
 
     # Mostrar la gráfica final
     plot.plt.show()

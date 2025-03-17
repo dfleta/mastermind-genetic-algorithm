@@ -5,24 +5,23 @@ plt.figure(figsize=(10, 6))
 
 # Lista de colores para cada generación
 COLORS = [
-            "blue",
-            "red",
-            "green",
-            "purple",
-            "orange",
-            "brown",
-            "pink",
-            "gray",
-            "cyan",
-            "magenta",
-            "lime",
-            "teal"
-        ]
+    "blue",
+    "red",
+    "green",
+    "purple",
+    "orange",
+    "brown",
+    "pink",
+    "gray",
+    "cyan",
+    "magenta",
+    "lime",
+    "teal",
+]
+
 
 def plot_generation(generation=0):
-
     def draw_generation(population_size, population_fitness):
-
         nonlocal generation
         # Obtener color para esta generación
         color = COLORS[generation % len(COLORS)]
