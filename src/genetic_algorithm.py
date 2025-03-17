@@ -46,7 +46,6 @@ class Genetic:
         self.parents = [
             self.weighted_random_choice(choices) for _ in range(Genetic.PARENTS_SIZE)
         ]
-        return [self.evaluate_individual(parent) for parent in self.parents]
 
     def weighted_random_choice(self, choices):
         max = sum([fitness + Genetic.F_MAX_GLOBAL for _, fitness in choices])
@@ -146,7 +145,7 @@ class Genetic:
             self.evaluate_population()
 
             ### SELECT PARENTS ###
-            parents_fitness = self.select_parents()
+            self.select_parents()
 
             ###  REPRODUCE OFFSPRING ###
             self.reproduce_offspring()
