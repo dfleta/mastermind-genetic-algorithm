@@ -12,6 +12,7 @@ class Genetic:
         self.population_fitness = []
         self.parents = []
         self.solution = ()
+        self.max_generations = 0
 
     def generate_chromosome(self):
         # cambiar a choice para que haya replacemnt y elegir mas de una vez un color
@@ -24,6 +25,9 @@ class Genetic:
 
     def set_fitness_function(self, game):
         self.fitness_function = game
+
+    def set_max_generations(self, num_max_generations):
+        self.max_generations = num_max_generations
 
     def evaluate_individual(self, chromosome):
         return sum(self.fitness_function.guess_solution(chromosome))
@@ -131,3 +135,45 @@ class Genetic:
             return self.solution
         else:
             return ()
+
+    def set_plot(self, draw_function):
+        self.draw_generation = draw_function
+
+    def run(self):
+        self.create_initial_population()
+        print("\n### INITIAL POPULATION ###\n")
+        print(self.population)
+
+        attemps = 0
+        while not self.stopping() and attemps < self.max_generations:
+            self.evaluate_population()
+            print("\n### POPULATION FITNESS ###\n")
+            print(self.population_fitness)
+
+            print("\n### PARENTS ###\n")
+            parents_fitness = self.select_parents()
+            print("len parents: ", len(self.parents))
+            print(self.parents)
+            print("\n### PARENTS FITNESS ###\n")
+            print(parents_fitness)
+
+            self.reproduce_offspring()
+            print("\n###  OFFSPRING ###\n")
+            print(self.population)
+            print("len population: ", len(self.population))
+            print("len parents: ", len(self.parents))
+
+            print("\n###  MUTATION  ###\n")
+            self.mutation()
+            print("len population: ", len(self.population))
+            print("len parents: ", len(self.parents))
+
+            print("\n###  POPULATION SORTED ###\n")
+            self.populate_nex_generation()
+            print("\n###  POPULATION SELECTED ###\n")
+            print(self.population)
+            print("len population sorted: ", len(self.population))
+
+            attemps += 1
+
+            self.draw_generation(len(self.population), self.population_fitness)
