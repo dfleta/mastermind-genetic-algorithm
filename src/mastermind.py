@@ -1,15 +1,19 @@
 from enum import Enum, unique
+from colorama import init, Fore, Style
+
+# Inicializar colorama
+init()
 
 
 @unique
 class Colors(Enum):
-    RED = 1
-    BLUE = 2
-    PURPLE = 3
-    YELLOW = 4
-    GREEN = 5
-    WHITE = 6
-    BLACK = 7
+    RED = (1, Fore.RED + "●" + Style.RESET_ALL)
+    BLUE = (2, Fore.BLUE + "●" + Style.RESET_ALL)
+    PURPLE = (3, Fore.MAGENTA + "●" + Style.RESET_ALL)
+    YELLOW = (4, Fore.YELLOW + "●" + Style.RESET_ALL)
+    GREEN = (5, Fore.GREEN + "●" + Style.RESET_ALL)
+    WHITE = (6, Fore.WHITE + "●" + Style.RESET_ALL)
+    BLACK = (7, Style.BRIGHT + Fore.BLACK + "●" + Style.RESET_ALL)
 
 
 class Mastermind:
@@ -39,3 +43,14 @@ class Mastermind:
                     used_pegs.add(peg)
 
         return code
+
+
+def print_colored_solution(pegs):
+    print("Solution: ", end="")
+    for peg in pegs:
+        if isinstance(peg, str):  # Si es un string (nombre del color)
+            color = Colors[peg]
+            print(color.value[1], end=" ")
+        else:  # Si es un objeto Colors
+            print(peg.value[1], end=" ")
+    print()  # Nueva línea al final

@@ -80,12 +80,10 @@ class Genetic:
                 chromosome = random.choice(tuple(self.population))
                 self.population.remove(chromosome)
 
-            print(chromosome)
             gen_muted = random.randrange(0, len(chromosome))
             muted = list(chromosome)
             muted[gen_muted] = random.choice(list(Colors.__members__.keys()))
             self.population.add(tuple(muted))
-            print("muted:", tuple(muted))
 
     def populate_nex_generation(self):
         # self.population = self.elitism_selection()
@@ -100,7 +98,6 @@ class Genetic:
         ]
         # elitism selection
         sorted_by_fitness = sorted(choices, key=lambda item: item[1], reverse=True)
-        print(sorted_by_fitness)
         return set(
             [chromosome for chromosome, _ in sorted_by_fitness][
                 : Genetic.POPULATION_SIZE
@@ -140,40 +137,27 @@ class Genetic:
         self.draw_generation = draw_function
 
     def run(self):
+        ### INITIAL POPULATION ###
         self.create_initial_population()
-        print("\n### INITIAL POPULATION ###\n")
-        print(self.population)
 
         attemps = 0
         while not self.stopping() and attemps < self.max_generations:
+            ### POPULATION FITNESS ###
             self.evaluate_population()
-            print("\n### POPULATION FITNESS ###\n")
-            print(self.population_fitness)
 
-            print("\n### PARENTS ###\n")
+            ### SELECT PARENTS ###
             parents_fitness = self.select_parents()
-            print("len parents: ", len(self.parents))
-            print(self.parents)
-            print("\n### PARENTS FITNESS ###\n")
-            print(parents_fitness)
 
+            ###  REPRODUCE OFFSPRING ###
             self.reproduce_offspring()
-            print("\n###  OFFSPRING ###\n")
-            print(self.population)
-            print("len population: ", len(self.population))
-            print("len parents: ", len(self.parents))
 
-            print("\n###  MUTATION  ###\n")
+            ###  MUTATION  ###
             self.mutation()
-            print("len population: ", len(self.population))
-            print("len parents: ", len(self.parents))
 
-            print("\n###  POPULATION SORTED ###\n")
+            ###  SELECT POPULATION by ELITISM or RANK WHEEL ###
             self.populate_nex_generation()
-            print("\n###  POPULATION SELECTED ###\n")
-            print(self.population)
-            print("len population sorted: ", len(self.population))
 
             attemps += 1
 
+            ### PLOT GENERATION FITNESS ###
             self.draw_generation(len(self.population), self.population_fitness)
