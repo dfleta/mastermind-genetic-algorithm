@@ -1,4 +1,4 @@
-from src.mastermind import Colors
+from src.mastermind import Colors, print_colored_pegs
 import random
 
 
@@ -112,7 +112,6 @@ class Genetic:
             selected_individuals.add(
                 random.choices(chromosomes, weights=population_fitness, k=1)[0]
             )
-        assert len(selected_individuals) == Genetic.POPULATION_SIZE
         return selected_individuals
 
     def stopping(self):
@@ -130,6 +129,15 @@ class Genetic:
             self.solution = global_maximum.pop()
             return self.solution
         else:
+            choices = [
+                (chromosome, self.evaluate_individual(chromosome))
+                for chromosome in self.population
+            ]
+            chromosome, fitness = sorted(
+                choices, key=lambda item: item[1], reverse=True
+            )[0]
+            print_colored_pegs(chromosome)
+            print(fitness)
             return ()
 
     def set_plot(self, draw_function):
