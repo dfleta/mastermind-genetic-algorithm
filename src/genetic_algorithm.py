@@ -13,6 +13,7 @@ class Genetic:
         self.parents = []
         self.solution = ()
         self.max_generations = 0
+        self.minimum_locals = set()
 
     def generate_chromosome(self):
         # cambiar a choice para que haya replacemnt y elegir mas de una vez un color
@@ -41,7 +42,6 @@ class Genetic:
             (chromosome, self.evaluate_individual(chromosome))
             for chromosome in self.population
         ]
-        # choices = list(zip(self.population, self.population_fitness))
         # roulette wheel selection
         self.parents = [
             self.weighted_random_choice(choices) for _ in range(Genetic.PARENTS_SIZE)
@@ -90,18 +90,20 @@ class Genetic:
         self.population_fitness = list(map(self.evaluate_individual, self.population))
 
     def elitism_selection(self):
-        # [((Chromosoma), fitness)]
-        choices = [
-            (chromosome, self.evaluate_individual(chromosome))
-            for chromosome in self.population
-        ]
-        # elitism selection
-        sorted_by_fitness = sorted(choices, key=lambda item: item[1], reverse=True)
+        sorted_by_fitness = self._sorted_chromosome_by_fitness()
         return set(
             [chromosome for chromosome, _ in sorted_by_fitness][
                 : Genetic.POPULATION_SIZE
             ]
         )
+    
+    def _sorted_chromosome_by_fitness(self):
+        # [((Chromosoma), fitness)]
+        choices = [
+            (chromosome, self.evaluate_individual(chromosome))
+            for chromosome in self.population
+        ]
+        return sorted(choices, key=lambda item: item[1], reverse=True)
 
     def rank_selection(self):
         chromosomes = list(self.population)
@@ -129,14 +131,12 @@ class Genetic:
             self.solution = global_maximum.pop()
             return self.solution
         else:
-            choices = [
-                (chromosome, self.evaluate_individual(chromosome))
-                for chromosome in self.population
-            ]
-            chromosome, fitness = sorted(
-                choices, key=lambda item: item[1], reverse=True
-            )[0]
-            print_colored_pegs(chromosome)
+            local_minimums = self._sorted_chromosome_by_fitness()
+            best_chromosome, fitness = local_minimums.pop(0)
+            while best_chromosome in self.minimum_locals:
+                best_chromosome, fitness = local_minimums.pop(0)
+            self.minimum_locals.add(best_chromosome)
+            print_colored_pegs(best_chromosome)
             print(fitness)
             return ()
 

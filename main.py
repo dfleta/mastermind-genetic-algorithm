@@ -14,6 +14,7 @@ def main():
     game = Mastermind(solution)
     print("\n### CODE ###\n")
     print_colored_pegs(game.get_solution())
+    print()
     print("\n### LOCALS ###\n")
 
     ga = Genetic()
@@ -29,6 +30,7 @@ def main():
 
     print("\n###  SOLUTION ###\n")
     print_colored_pegs(ga.solution)
+    print()
 
 
 if __name__ == "__main__":
