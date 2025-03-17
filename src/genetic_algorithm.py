@@ -140,40 +140,28 @@ class Genetic:
         self.draw_generation = draw_function
 
     def run(self):
+        ### INITIAL POPULATION ###
         self.create_initial_population()
-        print("\n### INITIAL POPULATION ###\n")
-        print(self.population)
 
         attemps = 0
         while not self.stopping() and attemps < self.max_generations:
+            ### POPULATION FITNESS ###
             self.evaluate_population()
-            print("\n### POPULATION FITNESS ###\n")
-            print(self.population_fitness)
 
-            print("\n### PARENTS ###\n")
+            ### SELECT PARENTS ###
             parents_fitness = self.select_parents()
-            print("len parents: ", len(self.parents))
-            print(self.parents)
-            print("\n### PARENTS FITNESS ###\n")
             print(parents_fitness)
 
+            ###  REPRODUCE OFFSPRING ###
             self.reproduce_offspring()
-            print("\n###  OFFSPRING ###\n")
-            print(self.population)
-            print("len population: ", len(self.population))
-            print("len parents: ", len(self.parents))
 
-            print("\n###  MUTATION  ###\n")
+            ###  MUTATION  ###
             self.mutation()
-            print("len population: ", len(self.population))
-            print("len parents: ", len(self.parents))
 
-            print("\n###  POPULATION SORTED ###\n")
+            ###  SELECT POPULATION by ELITISM or RANK WHEEL ###
             self.populate_nex_generation()
-            print("\n###  POPULATION SELECTED ###\n")
-            print(self.population)
-            print("len population sorted: ", len(self.population))
 
             attemps += 1
 
+            ### PLOT GENERATION FITNESS ###
             self.draw_generation(len(self.population), self.population_fitness)
