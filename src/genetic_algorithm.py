@@ -80,12 +80,10 @@ class Genetic:
                 chromosome = random.choice(tuple(self.population))
                 self.population.remove(chromosome)
 
-            print(chromosome)
             gen_muted = random.randrange(0, len(chromosome))
             muted = list(chromosome)
             muted[gen_muted] = random.choice(list(Colors.__members__.keys()))
             self.population.add(tuple(muted))
-            print("muted:", tuple(muted))
 
     def populate_nex_generation(self):
         # self.population = self.elitism_selection()
@@ -100,7 +98,6 @@ class Genetic:
         ]
         # elitism selection
         sorted_by_fitness = sorted(choices, key=lambda item: item[1], reverse=True)
-        print(sorted_by_fitness)
         return set(
             [chromosome for chromosome, _ in sorted_by_fitness][
                 : Genetic.POPULATION_SIZE
@@ -150,7 +147,6 @@ class Genetic:
 
             ### SELECT PARENTS ###
             parents_fitness = self.select_parents()
-            print(parents_fitness)
 
             ###  REPRODUCE OFFSPRING ###
             self.reproduce_offspring()
