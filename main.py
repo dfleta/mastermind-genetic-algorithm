@@ -15,7 +15,6 @@ def main():
     print("\n### CODE ###\n")
     print_colored_pegs(game.get_solution())
     print()
-    print("\n### LOCALS ###\n")
 
     ga = Genetic()
     ga.set_fitness_function(game)
@@ -28,9 +27,13 @@ def main():
     # Mostrar la gráfica final
     plot.plt.show()
 
+    print("\n### LOCALS ###\n")
+    for peg, fitness in ga.maximum_locals:
+        print_colored_pegs(peg)
+        print(fitness)
     print("\n###  SOLUTION ###\n")
     print_colored_pegs(ga.solution)
-    print()
+    print("\n")
 
 
 if __name__ == "__main__":

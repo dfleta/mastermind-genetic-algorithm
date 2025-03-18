@@ -13,7 +13,7 @@ class Genetic:
         self.parents = []
         self.solution = ()
         self.max_generations = 0
-        self.minimum_locals = set()
+        self.maximum_locals = set()
 
     def generate_chromosome(self):
         # cambiar a choice para que haya replacemnt y elegir mas de una vez un color
@@ -96,7 +96,7 @@ class Genetic:
                 : Genetic.POPULATION_SIZE
             ]
         )
-    
+
     def _sorted_chromosome_by_fitness(self):
         # [((Chromosoma), fitness)]
         choices = [
@@ -117,7 +117,8 @@ class Genetic:
         return selected_individuals
 
     def stopping(self):
-        return self.global_maximum()
+        return self.solution if self.global_maximum() else self.local_maximum()
+        # self.solution = self.global_maximum() if self.global_maximum() else self.local_maximum()
 
     def global_maximum(self):
         global_maximum = set(
@@ -129,16 +130,15 @@ class Genetic:
         )
         if global_maximum:
             self.solution = global_maximum.pop()
-            return self.solution
-        else:
-            local_minimums = self._sorted_chromosome_by_fitness()
-            best_chromosome, fitness = local_minimums.pop(0)
-            while best_chromosome in self.minimum_locals:
-                best_chromosome, fitness = local_minimums.pop(0)
-            self.minimum_locals.add(best_chromosome)
-            print_colored_pegs(best_chromosome)
-            print(fitness)
-            return ()
+        return self.solution
+
+    def local_maximum(self):
+        local_maximums = self._sorted_chromosome_by_fitness()
+        best_chromosome = local_maximums.pop(0)
+        while best_chromosome in self.maximum_locals:
+            best_chromosome = local_maximums.pop(0)
+        self.maximum_locals.add(best_chromosome)
+        return ()
 
     def set_plot(self, draw_function):
         self.draw_generation = draw_function
@@ -148,6 +148,7 @@ class Genetic:
         self.create_initial_population()
 
         attemps = 0
+        ### STOP CONDITION ###
         while not self.stopping() and attemps < self.max_generations:
             ### POPULATION FITNESS ###
             self.evaluate_population()
