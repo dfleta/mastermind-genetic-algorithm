@@ -1,6 +1,6 @@
 import src.plot as plot
 from src.mastermind import Mastermind, Colors, print_colored_pegs
-from src.genetic_algorithm import Genetic
+from src.genetic_algorithm import GA
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     print_colored_pegs(game.get_solution())
     print()
 
-    ga = Genetic()
+    ga = GA()
     ga.set_fitness_function(game)
     ga.set_max_generations(Mastermind.MAX_ATTEMPS)
     draw_generation = plot.plot_generation(generation=0)

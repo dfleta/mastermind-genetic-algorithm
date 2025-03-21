@@ -2,10 +2,11 @@ from src.mastermind import Colors, print_colored_pegs
 import random
 
 
-class Genetic:
+class GA:
     POPULATION_SIZE = 60
     PARENTS_SIZE = 40  # 20 parejas generan 2 hijos por pareja = 40, total poblacion 60 + 40 => matar a ¿?
     F_MAX_GLOBAL = 4
+    MUTATION_RATIO = POPULATION_SIZE // 10
 
     def __init__(self):
         self.population = set()
@@ -20,7 +21,7 @@ class Genetic:
         return random.sample(list(Colors.__members__.keys()), 4)
 
     def create_initial_population(self):
-        while len(self.population) < Genetic.POPULATION_SIZE:
+        while len(self.population) < GA.POPULATION_SIZE:
             # set() no permite duplicados => chromosomas unicos
             self.population.add(tuple(self.generate_chromosome()))
 
@@ -44,15 +45,15 @@ class Genetic:
         ]
         # roulette wheel selection
         self.parents = [
-            self.weighted_random_choice(choices) for _ in range(Genetic.PARENTS_SIZE)
+            self.weighted_random_choice(choices) for _ in range(GA.PARENTS_SIZE)
         ]
 
     def weighted_random_choice(self, choices):
-        max = sum([fitness + Genetic.F_MAX_GLOBAL for _, fitness in choices])
+        max = sum([fitness + GA.F_MAX_GLOBAL for _, fitness in choices])
         pick = random.uniform(0, max)
         current = 0
         for chromosome, fitness in choices:
-            current += fitness + Genetic.F_MAX_GLOBAL
+            current += fitness + GA.F_MAX_GLOBAL
             if current > pick:
                 return chromosome
 
@@ -71,8 +72,7 @@ class Genetic:
         return child_a, child_b
 
     def mutation(self):
-        MUTATION_RATIO = Genetic.POPULATION_SIZE // 10
-        for _ in range(MUTATION_RATIO):
+        for _ in range(GA.MUTATION_RATIO):
             if len(self.parents) > 0:
                 chromosome = self.parents.pop()
             else:
@@ -93,7 +93,7 @@ class Genetic:
         sorted_by_fitness = self._sorted_chromosome_by_fitness()
         return set(
             [chromosome for chromosome, _ in sorted_by_fitness][
-                : Genetic.POPULATION_SIZE
+                : GA.POPULATION_SIZE
             ]
         )
 
@@ -110,7 +110,7 @@ class Genetic:
         population_fitness = list(map(self.evaluate_individual, chromosomes))
         population_fitness = list(map(lambda fitness: fitness + 4, population_fitness))
         selected_individuals = set()
-        while len(selected_individuals) < Genetic.POPULATION_SIZE:
+        while len(selected_individuals) < GA.POPULATION_SIZE:
             selected_individuals.add(
                 random.choices(chromosomes, weights=population_fitness, k=1)[0]
             )
@@ -124,7 +124,7 @@ class Genetic:
         global_maximum = set(
             filter(
                 lambda chromosome: self.evaluate_individual(chromosome)
-                == Genetic.F_MAX_GLOBAL,
+                == GA.F_MAX_GLOBAL,
                 self.population,
             )
         )
