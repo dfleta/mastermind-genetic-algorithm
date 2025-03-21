@@ -59,11 +59,11 @@ uv sync --group lint
 
 ### Uso
 
-`uv run main.py`
+`uv run play_mastermind.py`
 
 o
 
-`python3 main.py`
+`python3 play_mastermind.py`
 
 ## Implementación
 [Texto generaro por Claude]
