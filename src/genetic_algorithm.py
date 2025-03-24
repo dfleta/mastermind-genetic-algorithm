@@ -1,4 +1,4 @@
-from src.mastermind import Colors, print_colored_pegs
+from src.mastermind import Colors
 import random
 
 
@@ -6,12 +6,13 @@ class GA:
     POPULATION_SIZE = 60
     PARENTS_SIZE = 40  # 20 parejas generan 2 hijos por pareja = 40, total poblacion 60 + 40 => matar a ¿?
     F_MAX_GLOBAL = 4
-    MUTATION_RATIO = (POPULATION_SIZE + PARENTS_SIZE) // 10
+    MUTATION_RATIO = PARENTS_SIZE // 10
 
     def __init__(self):
         self.population = set()
         self.population_fitness = []
         self.parents = []
+        self.offspring = set()
         self.solution = ()
         self.max_generations = 0
         self.maximum_locals = set()
@@ -61,8 +62,9 @@ class GA:
         while len(self.parents) >= 2:
             parent_a, parent_b = random.sample(self.parents, k=2)
             child_a, child_b = self.single_point_crossover(parent_a, parent_b)
-            self.population.add(child_a)
-            self.population.add(child_b)
+            # set evita cromosomas repetidos
+            self.offspring.add(child_a)
+            self.offspring.add(child_b)
             self.parents.remove(parent_a)
             self.parents.remove(parent_b)
 
@@ -72,19 +74,21 @@ class GA:
         return child_a, child_b
 
     def mutation(self):
+        # las mutaciones se producen sólo en offspring
         for _ in range(GA.MUTATION_RATIO):
-            if len(self.parents) > 0:
-                chromosome = self.parents.pop()
-            else:
-                chromosome = random.choice(tuple(self.population))
-                self.population.remove(chromosome)
+            chromosome = random.choice(tuple(self.offspring))
+            self.offspring.remove(chromosome)
 
             gen_muted = random.randrange(0, len(chromosome))
             muted = list(chromosome)
             muted[gen_muted] = random.choice(list(Colors.__members__.keys()))
-            self.population.add(tuple(muted))
+            # set elimina cromosomas repetidos
+            self.offspring.add(tuple(muted))
 
     def populate_nex_generation(self):
+        # set elimina cromosomas repetidos
+        self.population.update(self.offspring)
+        self.offspring = set()
         # self.population = self.elitism_selection()
         self.population = self.rank_selection()
         self.population_fitness = list(map(self.evaluate_individual, self.population))
@@ -92,9 +96,7 @@ class GA:
     def elitism_selection(self):
         sorted_by_fitness = self._sorted_chromosome_by_fitness()
         return set(
-            [chromosome for chromosome, _ in sorted_by_fitness][
-                : GA.POPULATION_SIZE
-            ]
+            [chromosome for chromosome, _ in sorted_by_fitness][: GA.POPULATION_SIZE]
         )
 
     def _sorted_chromosome_by_fitness(self):
