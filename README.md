@@ -109,6 +109,11 @@ El ciclo de vida se implementa en la clase `GA` siguiendo estas etapas:
 
 ## Resultados
 
+### Evolución de la función fitness por chromosoma en cada generación.
+
+!["Evolución de la función fitness por chromosoma en cada generación"](./doc/gif/ezgif.com-animated-gif-maker.gif)
+
+
 ### Rank wheel para la selección de individuos que pasan a la siguiente generación
 
 !["Salida por consola"](./doc/CLI_mutation_rank_colored.png)
