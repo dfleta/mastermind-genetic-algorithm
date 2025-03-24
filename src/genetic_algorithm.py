@@ -6,7 +6,7 @@ class GA:
     POPULATION_SIZE = 60
     PARENTS_SIZE = 40  # 20 parejas generan 2 hijos por pareja = 40, total poblacion 60 + 40 => matar a ¿?
     F_MAX_GLOBAL = 4
-    MUTATION_RATIO = POPULATION_SIZE // 10
+    MUTATION_RATIO = (POPULATION_SIZE + PARENTS_SIZE) // 10
 
     def __init__(self):
         self.population = set()
