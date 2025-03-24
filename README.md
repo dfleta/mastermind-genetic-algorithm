@@ -93,7 +93,7 @@ El ciclo de vida se implementa en la clase `GA` siguiendo estas etapas:
    - Los hijos se añaden a la población
 
 5. **Mutación** (`mutation`):
-   - Se muta un 10% de la población (MUTATION_RATIO = 6)
+   - Se muta un 10% de la población sumada al offspring (MUTATION_RATIO = 10)
    - Para cada mutación, se selecciona un gen aleatorio y se cambia por otro color
 
 6. **Selección de Nueva Generación** (`populate_next_generation`):
