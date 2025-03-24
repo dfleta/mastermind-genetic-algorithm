@@ -6,7 +6,7 @@ class GA:
     POPULATION_SIZE = 60
     PARENTS_SIZE = 40  # 20 parejas generan 2 hijos por pareja = 40, total poblacion 60 + 40 => matar a ¿?
     F_MAX_GLOBAL = 4
-    MUTATION_RATIO = PARENTS_SIZE // 10
+    MUTATION_RATIO = PARENTS_SIZE // 5
 
     def __init__(self):
         self.population = set()
@@ -88,7 +88,7 @@ class GA:
     def populate_nex_generation(self):
         # set elimina cromosomas repetidos
         self.population.update(self.offspring)
-        self.offspring = set()
+        self.offspring.clear()
         # self.population = self.elitism_selection()
         self.population = self.rank_selection()
         self.population_fitness = list(map(self.evaluate_individual, self.population))
