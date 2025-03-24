@@ -2,7 +2,7 @@ Resolviendo Mastermind mediante algoritmos genéticos
 ====================================================
 
 ## Contexto
-[Texto generado por Claude]
+[Texto de este epígrafe generado por Claude]
 
 Mastermind es un juego de mesa de deducción donde un jugador (el codificador) crea un código secreto usando una combinación de colores, y el otro jugador (el decodificador) intenta adivinarlo mediante propuestas sucesivas. Después de cada intento, el codificador proporciona retroalimentación indicando:
 - Cuántos colores están en la posición correcta (clavijas negras)
@@ -66,7 +66,7 @@ o
 `python3 play_mastermind.py`
 
 ## Implementación
-[Texto generaro por Claude]
+[Texto de este epígrafe generado por Claude]
 
 La implementación del algoritmo genético sigue el ciclo de vida propuesto en Hurbans (2020).
 
@@ -109,9 +109,9 @@ El ciclo de vida se implementa en la clase `GA` siguiendo estas etapas:
 
 ## Resultados
 
-### Evolución de la función fitness por chromosoma en cada generación.
+### Función fitness de los individuos /cromosomas por generación.
 
-!["Evolución de la función fitness por chromosoma en cada generación"](./doc/gif/ezgif.com-animated-gif-maker.gif)
+!["Función fitness por cromosoma por generación"](./doc/gif/ezgif.com-animated-gif-maker.gif)
 
 
 ### Rank wheel para la selección de individuos que pasan a la siguiente generación
@@ -132,3 +132,6 @@ El ciclo de vida se implementa en la clase `GA` siguiendo estas etapas:
 
 ## Referencias
 Hurbans, R. (2020). _Grokking Artificial Intelligence Algorithms_. Manning Publications Co. ISBN: 9781617296185
+
+Russell, S. J., & Norvig, P. (2022). _Artificial intelligence: a modern approach_. Global edition. Pearson Education Limited.
+
